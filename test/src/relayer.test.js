@@ -1,6 +1,6 @@
 const { expect } = require("chai").use(require('chai-as-promised'));
 const { ethers } = require("hardhat");
-const { signMetaTxRequest } = require("../../src/signing");
+const { signMetaTxRequest } = require("../../src/signer");
 const { relay } = require('../../src/relayer');
 
 async function deploy(name, ...params) {
@@ -19,14 +19,14 @@ describe("src/relayer", function() {
   it("registers a name via a meta-tx", async function() {
     const { forwarder, registry, signer } = this;
 
-    const { request, signed } = await signMetaTxRequest(signer.provider, forwarder, {
+    const { request, signature } = await signMetaTxRequest(signer.provider, forwarder, {
       from: signer.address,
       to: registry.address,
       data: registry.interface.encodeFunctionData('register', ['meta-txs']),
     });
     
     const whitelist = [registry.address]
-    await relay(forwarder, request, signed, whitelist);
+    await relay(forwarder, request, signature, whitelist);
 
     expect(await registry.owners('meta-txs')).to.equal(signer.address);
     expect(await registry.names(signer.address)).to.equal('meta-txs');
@@ -35,7 +35,7 @@ describe("src/relayer", function() {
   it("refuses to send to non-whitelisted address", async function() {
     const { forwarder, registry, signer } = this;
 
-    const { request, signed } = await signMetaTxRequest(signer.provider, forwarder, {
+    const { request, signature } = await signMetaTxRequest(signer.provider, forwarder, {
       from: signer.address,
       to: registry.address,
       data: registry.interface.encodeFunctionData('register', ['meta-txs']),
@@ -43,14 +43,14 @@ describe("src/relayer", function() {
     
     const whitelist = [];
     await expect(
-      relay(forwarder, request, signed, whitelist)
+      relay(forwarder, request, signature, whitelist)
     ).to.be.rejectedWith(/non-whitelisted/i);
   });
 
   it("refuses to send incorrect signature", async function() {
     const { forwarder, registry, signer } = this;
 
-    const { request, signed } = await signMetaTxRequest(signer.provider, forwarder, {
+    const { request, signature } = await signMetaTxRequest(signer.provider, forwarder, {
       from: signer.address,
       to: registry.address,
       data: registry.interface.encodeFunctionData('register', ['meta-txs']),
@@ -59,7 +59,7 @@ describe("src/relayer", function() {
     
     const whitelist = [registry.address]
     await expect(
-      relay(forwarder, request, signed, whitelist)
+      relay(forwarder, request, signature, whitelist)
     ).to.be.rejectedWith(/invalid/i);
   });
 });

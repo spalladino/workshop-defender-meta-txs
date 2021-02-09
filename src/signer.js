@@ -1,3 +1,5 @@
+const ethSigUtil = require('eth-sig-util');
+
 const EIP712Domain = [
   { name: 'name', type: 'string' },
   { name: 'version', type: 'string' },
@@ -31,7 +33,14 @@ function getMetaTxTypeData(chainId, verifyingContract) {
 };
 
 async function signTypedData(signer, from, data) {
-  // Hardhat VM and Metamask differ regarding EIP712 methods
+  // If signer is a private key, use it to sign
+  if (typeof(signer) === 'string') {
+    const privateKey = Buffer.from(signer.replace(/^0x/, ''), 'hex');
+    return ethSigUtil.signTypedMessage(privateKey, { data });
+  }
+
+  // Otherwise, send the signTypedData RPC call
+  // Note that hardhatvm and metamask differ regarding EIP712 input
   const isHardhat = data.domain.chainId == 31337;
   const [method, argData] = isHardhat
     ? ['eth_signTypedData', data]
@@ -39,20 +48,26 @@ async function signTypedData(signer, from, data) {
   return await signer.send(method, [from, argData]);
 }
 
-async function signMetaTxRequest(signer, forwarder, request) {
-  // Obtain nonce and chainId
-  const { from } = request;
-  const nonce = await forwarder.getNonce(from).then(nonce => nonce.toString());
-  const chainId = await forwarder.provider.getNetwork().then(n => n.chainId);
-  
-  // Setup formatted data to sign
-  const message = { value: 0, gas: 1e6, nonce, ...request };
-  const signTypeData = getMetaTxTypeData(chainId, forwarder.address);
-  const toSign = { ...signTypeData, message }
-
-  // And ask the signer to sign it!
-  const signed = await signTypedData(signer, from, toSign);
-  return { signed, request: message };
+async function buildRequest(forwarder, input) {
+  const nonce = await forwarder.getNonce(input.from).then(nonce => nonce.toString());
+  return { value: 0, gas: 1e6, nonce, ...input };
 }
 
-module.exports = { signMetaTxRequest };
+async function buildTypedData(forwarder, request) {
+  const chainId = await forwarder.provider.getNetwork().then(n => n.chainId);
+  const typeData = getMetaTxTypeData(chainId, forwarder.address);
+  return { ...typeData, message: request };
+}
+
+async function signMetaTxRequest(signer, forwarder, input) {
+  const request = await buildRequest(forwarder, input);
+  const toSign = await buildTypedData(forwarder, request);
+  const signature = await signTypedData(signer, input.from, toSign);
+  return { signature, request };
+}
+
+module.exports = { 
+  signMetaTxRequest,
+  buildRequest,
+  buildTypedData,
+};

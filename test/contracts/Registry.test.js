@@ -17,7 +17,7 @@ describe("contracts/Registry", function() {
     const registry = this.registry.connect(sender);
     
     const receipt = await registry.register('defender').then(tx => tx.wait());
-    
+
     expect(receipt.events[0].event).to.equal('Registered');
     expect(await registry.owners('defender')).to.equal(sender.address);
     expect(await registry.names(sender.address)).to.equal('defender');

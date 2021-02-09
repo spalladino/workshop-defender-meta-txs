@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { signMetaTxRequest } = require("../../src/signing");
+const { signMetaTxRequest } = require("../../src/signer");
 
 async function deploy(name, ...params) {
   const Contract = await ethers.getContractFactory(name);
@@ -31,13 +31,13 @@ describe("contracts/RegistryV2", function() {
     const forwarder = this.forwarder.connect(relayer);
     const registry = this.registry;
 
-    const { request, signed } = await signMetaTxRequest(signer.provider, forwarder, {
+    const { request, signature } = await signMetaTxRequest(signer.provider, forwarder, {
       from: signer.address,
       to: registry.address,
       data: registry.interface.encodeFunctionData('register', ['meta-txs']),
     });
     
-    await forwarder.execute(request, signed).then(tx => tx.wait());
+    await forwarder.execute(request, signature).then(tx => tx.wait());
 
     expect(await registry.owners('meta-txs')).to.equal(signer.address);
     expect(await registry.names(signer.address)).to.equal('meta-txs');

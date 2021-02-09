@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-ethers");
 
@@ -14,4 +16,13 @@ task("accounts", "Prints the list of accounts", async () => {
  */
 module.exports = {
   solidity: "0.8.0",
+  networks: {
+    local: {
+      url: 'http://localhost:8545'
+    },
+    xdai: {
+      url: 'https://dai.poa.network',
+      accounts: [process.env.PRIVATE_KEY],
+    }
+  }
 };

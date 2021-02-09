@@ -3,7 +3,7 @@ const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-c
 const { relay } = require('../../src/relayer');
 
 const ForwarderAbi = require('../../artifacts/openzeppelin-solidity/contracts/GSNv2/MinimalForwarder.sol/MinimalForwarder.json').abi;
-const ForwarderAddress = process.env.FORWARDER_ADDRESS;
+const ForwarderAddress = require('../../deploy.json').MinimalForwarder;
 
 exports.handler = async function(event) {
   // Parse webhook payload
@@ -21,21 +21,11 @@ exports.handler = async function(event) {
   return { txHash: tx.hash };
 }
 
-// async function relay(forwarder, request, signature) {
-//   // Validate request
-//   const valid = await forwarder.verify(request, signature);
-//   if (!valid) throw new Error(`Invalid request`);
-  
-//   // Send meta-tx through the relayer
-//   const tx = await forwarder.execute(request, signature);
-//   console.log(`Sent meta-tx: ${tx.hash}`);
-//   return tx;
-// }
-
-// if (require.main === module) {
-//   require('dotenv').config();
-//   const { RELAYER_API_KEY: apiKey, RELAYER_API_SECRET: apiSecret } = process.env;
-//   exports.handler({ apiKey, apiSecret })
-//     .then(() => process.exit(0))
-//     .catch(error => { console.error(error); process.exit(1); });
-// }
+if (require.main === module) {
+  require('dotenv').config();
+  const { RELAYER_API_KEY: apiKey, RELAYER_API_SECRET: apiSecret } = process.env;
+  const payload = require('fs').readFileSync('tmp/request.json');
+  exports.handler({ apiKey, apiSecret, body: payload })
+    .then(() => process.exit(0))
+    .catch(error => { console.error(error); process.exit(1); });
+}
