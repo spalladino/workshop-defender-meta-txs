@@ -6,7 +6,7 @@ async function deploy(name, ...params) {
   return await Contract.deploy(...params).then(f => f.deployed());
 }
 
-describe("Registry", function() {
+describe("contracts/Registry", function() {
   beforeEach(async function() {
     this.registry = await deploy('Registry');
     this.accounts = await ethers.getSigners();

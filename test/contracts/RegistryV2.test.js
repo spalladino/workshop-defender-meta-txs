@@ -7,7 +7,7 @@ async function deploy(name, ...params) {
   return await Contract.deploy(...params).then(f => f.deployed());
 }
 
-describe("RegistryV2", function() {
+describe("contracts/RegistryV2", function() {
   beforeEach(async function() {
     this.forwarder = await deploy('MinimalForwarder');
     this.registry = await deploy("RegistryV2", this.forwarder.address);    

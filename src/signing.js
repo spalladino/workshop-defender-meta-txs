@@ -46,7 +46,7 @@ async function signMetaTxRequest(signer, forwarder, request) {
   const chainId = await forwarder.provider.getNetwork().then(n => n.chainId);
   
   // Setup formatted data to sign
-  const message = { value: 0, gas: 1e6, ...request, nonce };
+  const message = { value: 0, gas: 1e6, nonce, ...request };
   const signTypeData = getMetaTxTypeData(chainId, forwarder.address);
   const toSign = { ...signTypeData, message }
 
