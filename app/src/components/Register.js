@@ -15,8 +15,12 @@ function Register() {
     setSubmitting(true);
     
     try {
-      await registerName(registry, provider, name);
-      toast('Transaction sent!', { type: 'info' });
+      const response = await registerName(registry, provider, name);
+      const hash = response.hash;
+      const onClick = hash
+        ? () => window.open(`https://blockscout.com/poa/xdai/tx/${hash}`)
+        : undefined;
+      toast('Transaction sent!', { type: 'info', onClick });
       nameInput.current.value = '';
     } catch(err) {
       toast(err.message || err, { type: 'error' });
