@@ -1,7 +1,27 @@
 input {
-  margin: 0.5vmin;
+  width: 80%;
+  border: 1px solid #D8DBE2;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
 }
 
 button {
-  margin: 0.5vmin;
+  width: 18%;
+  height: 3rem;
+}
+
+.Container {
+  background: white;
+  border-radius: .7rem;
+  padding: 3rem;
+  box-shadow: 0px 8px 16px rgba(44, 55, 75, 0.16);
+  z-index: 2;
+  margin-top: -4rem;
+}
+
+h4 {
+  margin: 0;
+  text-align: center;
 }

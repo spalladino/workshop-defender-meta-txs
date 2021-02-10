@@ -1,10 +1,21 @@
 ul {
-  list-style-type:none;
+  list-style-type: none;
   padding-inline-start: 0;
+  max-width: fit-content;
+  margin: 2rem auto;
+}
+
+li {
+  color: #2C374B;
 }
 
 .address {
   font-family: 'Courier New', Courier, monospace;
   text-align: left;
   margin-right: 1vmin;
+  color: #575C66;
+}
+
+.Registrations h1 {
+  text-align: center;
 }
