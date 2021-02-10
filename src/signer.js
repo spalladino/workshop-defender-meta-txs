@@ -40,11 +40,11 @@ async function signTypedData(signer, from, data) {
   }
 
   // Otherwise, send the signTypedData RPC call
-  // Note that hardhatvm and metamask differ regarding EIP712 input
+  // Note that hardhatvm and metamask require different EIP712 input
   const isHardhat = data.domain.chainId == 31337;
   const [method, argData] = isHardhat
     ? ['eth_signTypedData', data]
-    : ['eth_signTypedData_v3', JSON.stringify(data)]
+    : ['eth_signTypedData_v4', JSON.stringify(data)]
   return await signer.send(method, [from, argData]);
 }
 

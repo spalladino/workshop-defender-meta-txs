@@ -1,6 +1,7 @@
 const ethers = require('ethers');
 const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');
-const { relay, ForwarderAbi } = require('../../src/relayer');
+const { relay } = require('../../src/relayer');
+const { ForwarderAbi } = require('../../src/forwarder');
 const ForwarderAddress = require('../../deploy.json').MinimalForwarder;
 
 exports.handler = async function(event) {

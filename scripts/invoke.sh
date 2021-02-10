@@ -1,3 +1,5 @@
 source .env
-echo "Invoking $WEBHOOK_URL..."
-curl -s -XPOST "$WEBHOOK_URL" -d "@./tmp/request.json" -H "Content-Type: application/json" | jq '{result,message,status}'
+echo "Invoking $REACT_APP_WEBHOOK_URL..."
+curl -s -XPOST "$REACT_APP_WEBHOOK_URL" -d "@./tmp/request.json" -H "Content-Type: application/json" | jq -r 'if .status == "success" then (.result | fromjson | .txHash) else {result,message,status} end'
+
+
