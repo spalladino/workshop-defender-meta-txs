@@ -3,6 +3,6 @@ artifacts
 cache
 deploy.json
 deploy.*.json
-.env
+/.env
 tmp
 build
