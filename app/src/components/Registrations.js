@@ -31,15 +31,15 @@ function Registrations() {
     return () => registry.off(filter, listener);
   }, []);
 
-  return <div>
-    <h2>Last registrations</h2>
+  return <div className="Registrations">
+    <h1>Last registrations</h1>
     {registrations === undefined && (
       <span>Loading..</span>
     )}
     {registrations && (
       <ul>
         {registrations.map(r => (
-          <li key={r.id}>{r.who}: {r.name}</li>
+          <li key={r.id}><span className="address">{r.who}</span> {r.name}</li>
         ))}
       </ul>
     )}

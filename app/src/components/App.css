@@ -20,3 +20,10 @@
 .App-link {
   color: #61dafb;
 }
+
+.App-content {
+  max-width: 60vw;
+  margin-left: 10vw;
+  text-align: left;
+
+}

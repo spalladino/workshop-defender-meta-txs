@@ -2,6 +2,7 @@ import { useRef, useState, useContext } from 'react';
 import { registerName } from '../eth/register';
 import { EthereumContext } from "../eth/context";
 import { toast } from 'react-toastify';
+import './Register.css';
 
 function Register() {
   const nameInput = useRef(null);
@@ -25,7 +26,7 @@ function Register() {
   }
 
   return <div>
-    <h2>Register your name</h2>
+    <h1>Register your name</h1>
     <form onSubmit={sendTx}>
       <input required={true} placeholder="Your name here" ref={nameInput}></input>
       <button type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>

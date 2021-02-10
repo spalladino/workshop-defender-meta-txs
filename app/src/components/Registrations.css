@@ -1,3 +1,10 @@
 ul {
   list-style-type:none;
+  padding-inline-start: 0;
+}
+
+.address {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: left;
+  margin-right: 1vmin;
 }

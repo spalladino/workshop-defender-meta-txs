@@ -22,10 +22,12 @@ function App() {
           powered by Defender Relayer meta-transactions
         </p>
       </header>
-      <EthereumContext.Provider value={ethereumContext}>
-        <Register />
-        <Registrations />
-      </EthereumContext.Provider>
+      <section className="App-content">
+        <EthereumContext.Provider value={ethereumContext}>
+          <Register />
+          <Registrations />
+        </EthereumContext.Provider>
+      </section>
       <ToastContainer hideProgressBar={true} />
     </div>
   );
