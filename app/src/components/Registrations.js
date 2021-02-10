@@ -29,7 +29,7 @@ function Registrations() {
     
     subscribe();
     return () => registry.off(filter, listener);
-  }, []);
+  }, [registry]);
 
   return <div className="Registrations">
     <h1>Last registrations</h1>

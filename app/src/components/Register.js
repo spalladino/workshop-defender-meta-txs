@@ -15,7 +15,7 @@ function Register() {
     setSubmitting(true);
     
     try {
-      const response = await registerName(registry, provider, name);
+      await registerName(registry, provider, name);
       toast('Transaction sent!', { type: 'info' });
       nameInput.current.value = '';
     } catch(err) {
