@@ -32,7 +32,7 @@ function Registrations() {
   }, [registry]);
 
   return <div className="Registrations">
-    <h1>Last registrations</h1>
+    <h3>Last registrations 📝</h3>
     {registrations === undefined && (
       <span>Loading..</span>
     )}

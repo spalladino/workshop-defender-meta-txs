@@ -30,9 +30,8 @@ function Register() {
   }
 
   return <div className="Container">
-    <h4>Register your name</h4>
     <form onSubmit={sendTx}>
-      <input required={true} placeholder="Your name here" ref={nameInput}></input>
+      <input required={true} placeholder="Register your name here" ref={nameInput}></input>
       <button type="submit" disabled={submitting}>{submitting ? 'Registering...' : 'Register'}</button>
     </form>
   </div>
