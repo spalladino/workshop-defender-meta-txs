@@ -18,9 +18,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Names Registry</h1>
-        <p>
-          powered by Defender Relayer meta-transactions
-        </p>
+        <p>powered by Defender Relayer meta-transactions</p>
       </header>
       <section className="App-content">
         <EthereumContext.Provider value={ethereumContext}>

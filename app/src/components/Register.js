@@ -29,11 +29,10 @@ function Register() {
     }
   }
 
-  return <div>
-    <h1>Register your name</h1>
+  return <div className="Container">
     <form onSubmit={sendTx}>
-      <input required={true} placeholder="Your name here" ref={nameInput}></input>
-      <button type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
+      <input required={true} placeholder="Register your name here" ref={nameInput}></input>
+      <button type="submit" disabled={submitting}>{submitting ? 'Registering...' : 'Register'}</button>
     </form>
   </div>
 }
