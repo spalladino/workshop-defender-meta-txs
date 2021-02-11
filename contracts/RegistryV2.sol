@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "openzeppelin-solidity/contracts/GSNv2/BaseRelayRecipient.sol";
-import "openzeppelin-solidity/contracts/GSNv2/MinimalForwarder.sol";
+import "openzeppelin-solidity/contracts/metatx/BaseRelayRecipient.sol";
+import "openzeppelin-solidity/contracts/metatx/MinimalForwarder.sol";
 
 contract RegistryV2 is BaseRelayRecipient {  
   event Registered(address indexed who, string name);

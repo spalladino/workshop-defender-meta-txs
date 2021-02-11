@@ -5434,9 +5434,9 @@ once@^1.3.0, once@^1.3.1, once@^1.3.3, once@^1.4.0:
   dependencies:
     wrappy "1"
 
-openzeppelin-solidity@Amxx/openzeppelin-contracts#7731f16a76422c3f50695545c8bdf321c783318e:
+openzeppelin-solidity@Amxx/openzeppelin-contracts#0abb2530ecd8dbfde32551cb22d1db6a054dfe64:
   version "3.4.0"
-  resolved "https://codeload.github.com/Amxx/openzeppelin-contracts/tar.gz/7731f16a76422c3f50695545c8bdf321c783318e"
+  resolved "https://codeload.github.com/Amxx/openzeppelin-contracts/tar.gz/0abb2530ecd8dbfde32551cb22d1db6a054dfe64"
 
 os-homedir@^1.0.0:
   version "1.0.2"

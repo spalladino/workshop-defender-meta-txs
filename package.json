@@ -35,7 +35,7 @@
     "ethereum-waffle": "^3.2.2",
     "ethers": "^5.0.30",
     "hardhat": "^2.0.8",
-    "openzeppelin-solidity": "Amxx/openzeppelin-contracts#7731f16a76422c3f50695545c8bdf321c783318e",
+    "openzeppelin-solidity": "Amxx/openzeppelin-contracts#0abb2530ecd8dbfde32551cb22d1db6a054dfe64",
     "rollup": "^2.38.5"
   },
   "dependencies": {
