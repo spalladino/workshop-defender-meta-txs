@@ -8,7 +8,7 @@ function getInstance(name) {
 }
 
 async function main() {
-  const registry = await getInstance("RegistryV2");
+  const registry = await getInstance("Registry");
   const events = await registry.queryFilter(registry.filters.Registered());
   console.log('Registrations')
   console.log('=============')

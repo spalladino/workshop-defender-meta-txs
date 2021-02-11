@@ -1,17 +1,17 @@
 const { expect } = require("chai").use(require('chai-as-promised'));
 const { ethers } = require("hardhat");
 const { signMetaTxRequest } = require("../../src/signer");
-const { relay } = require('../../src/relayer');
+const { relay } = require('../../autotasks/relay');
 
 async function deploy(name, ...params) {
   const Contract = await ethers.getContractFactory(name);
   return await Contract.deploy(...params).then(f => f.deployed());
 }
 
-describe("src/relayer", function() {
+describe("autotasks/relay", function() {
   beforeEach(async function() {
     this.forwarder = await deploy('MinimalForwarder');
-    this.registry = await deploy("RegistryV2", this.forwarder.address);    
+    this.registry = await deploy("Registry", this.forwarder.address);    
     this.accounts = await ethers.getSigners();
     this.signer = this.accounts[2];
   });
@@ -44,7 +44,7 @@ describe("src/relayer", function() {
     const whitelist = [];
     await expect(
       relay(forwarder, request, signature, whitelist)
-    ).to.be.rejectedWith(/non-whitelisted/i);
+    ).to.be.rejectedWith(/rejected/i);
   });
 
   it("refuses to send incorrect signature", async function() {

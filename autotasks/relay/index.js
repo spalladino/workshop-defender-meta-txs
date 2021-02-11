@@ -1,10 +1,25 @@
 const ethers = require('ethers');
 const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');
-const { relay } = require('../../src/relayer');
+
 const { ForwarderAbi } = require('../../src/forwarder');
 const ForwarderAddress = require('../../deploy.json').MinimalForwarder;
+const RegistryAddress = require('../../deploy.json').Registry;
 
-exports.handler = async function(event) {
+async function relay(forwarder, request, signature, whitelist) {
+  // Decide if we want to relay this request based on a whitelist
+  const accepts = !whitelist || whitelist.includes(request.to);
+  if (!accepts) throw new Error(`Rejected request to ${request.to}`);
+
+  // Validate request on the forwarder contract
+  const valid = await forwarder.verify(request, signature);
+  if (!valid) throw new Error(`Invalid request`);
+  
+  // Send meta-tx through relayer to the forwarder contract
+  const gasLimit = (parseInt(request.gas) + 50000).toString();
+  return await forwarder.execute(request, signature, { gasLimit });
+}
+
+async function handler(event) {
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`);
   const { request, signature } = event.request.body;
@@ -18,14 +33,11 @@ exports.handler = async function(event) {
   
   // Relay transaction!
   const tx = await relay(forwarder, request, signature);
+  console.log(`Sent meta-tx: ${tx.hash}`);
   return { txHash: tx.hash };
 }
 
-if (require.main === module) {
-  require('dotenv').config();
-  const { RELAYER_API_KEY: apiKey, RELAYER_API_SECRET: apiSecret } = process.env;
-  const payload = require('fs').readFileSync('tmp/request.json');
-  exports.handler({ apiKey, apiSecret, request: { body: JSON.parse(payload) } })
-    .then(() => process.exit(0))
-    .catch(error => { console.error(error); process.exit(1); });
+module.exports = {
+  handler,
+  relay,
 }

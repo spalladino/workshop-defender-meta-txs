@@ -8,14 +8,14 @@ async function deploy(name, ...params) {
 
 async function main() {
   const forwarder = await deploy('MinimalForwarder');
-  const registry = await deploy("RegistryV2", forwarder.address);
+  const registry = await deploy("Registry", forwarder.address);
 
   writeFileSync('deploy.json', JSON.stringify({
     MinimalForwarder: forwarder.address,
-    RegistryV2: registry.address,
+    Registry: registry.address,
   }, null, 2));
 
-  console.log(`MinimalForwarder: ${forwarder.address}\nRegistryV2: ${registry.address}`);
+  console.log(`MinimalForwarder: ${forwarder.address}\nRegistry: ${registry.address}`);
 }
 
 if (require.main === module) {

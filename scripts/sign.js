@@ -10,7 +10,7 @@ function getInstance(name) {
 
 async function main() {
   const forwarder = await getInstance('MinimalForwarder');
-  const registry = await getInstance("RegistryV2");
+  const registry = await getInstance("Registry");
 
   const { NAME: name, ADDRESS: from, PRIVATE_KEY: signer } = process.env;
   const data = registry.interface.encodeFunctionData('register', [name || 'sign-test']);

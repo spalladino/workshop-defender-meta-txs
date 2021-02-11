@@ -11,10 +11,9 @@
     "sign": "hardhat run scripts/sign.js --network xdai",
     "events": "hardhat run scripts/events.js --network xdai",
     "build": "rollup -c",
-    "build:app": "cd app && yarn build",
     "invoke": "bash ./scripts/invoke.sh",
     "upload": "yarn build && node scripts/upload.js",
-    "relay": "node autotasks/relay/index.js",
+    "relay": "node scripts/relay.js",
     "test": "NODE_ENV=test hardhat test"
   },
   "keywords": [],
