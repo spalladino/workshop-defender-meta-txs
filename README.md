@@ -1,5 +1,7 @@
 # Defender Meta-Transactions Workshop
 
+**This repository has been migrated to [openzeppelin/workshops](https://github.com/OpenZeppelin/workshops).**
+
 Code for the workshop on Meta-Transactions using [OpenZeppelin Defender](https://openzeppelin.com/defender).
 
 This project consists of a sample _names registry_ contract, that accepts registrations for names either directly or via a meta-transaction, along with a client dapp, plus the meta-transaction relayer implementation.
